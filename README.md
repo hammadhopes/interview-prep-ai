@@ -2,7 +2,7 @@
 
 Paste a job description, add your resume, and get a tailored interview prep plan: match score, likely questions with answer tips, skill gaps, and a day-by-day study plan. It can also generate a one-page resume tailored to the role as a PDF.
 
-**Live demo:** _add your Render URL here_
+**Live demo:** _https://interview-prep-ai-production-0414.up.railway.app/_
 
 ## Features
 
