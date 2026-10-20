@@ -1,0 +1,113 @@
+@use "../../../styles/variables.scss" as *;
+
+.skeleton {
+    display: block;
+    border-radius: 0.25rem;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.06) 25%,
+        rgba(255, 255, 255, 0.14) 50%,
+        rgba(255, 255, 255, 0.06) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.4s ease-in-out infinite;
+}
+
+.reports-skeleton {
+    .reports__item {
+        cursor: default;
+    }
+
+    &__title {
+        width: 60%;
+        height: 1.4rem;
+    }
+
+    &__meta {
+        width: 45%;
+        height: 0.9rem;
+        margin-top: 0.6rem;
+    }
+
+    &__score {
+        width: 35%;
+        height: 1rem;
+        margin-top: auto;
+    }
+}
+
+// Single report page placeholder
+.detail-skeleton {
+    .q-card__header {
+        cursor: default;
+    }
+
+    &__nav-label {
+        width: 45%;
+        height: 0.7rem;
+        margin-left: $sp-3;
+    }
+
+    &__nav-item {
+        width: 100%;
+        height: 2.5rem;
+    }
+
+    &__label {
+        width: 6rem;
+        height: 0.7rem;
+    }
+
+    &__ring {
+        width: 120px;
+        height: 120px;
+        border-radius: $r-full;
+    }
+
+    &__tag {
+        width: 7rem;
+        height: 1.7rem;
+    }
+
+    &__button {
+        width: 100%;
+        max-width: 14rem;
+        height: 2.6rem;
+        align-self: center;
+        border-radius: $r-md;
+    }
+
+    &__title {
+        width: 14rem;
+        max-width: 60%;
+        height: 1.6rem;
+    }
+
+    &__count {
+        width: 6rem;
+        height: 1.6rem;
+        border-radius: $r-full;
+    }
+
+    &__q-index {
+        flex-shrink: 0;
+        width: 2.4rem;
+        height: 1.6rem;
+    }
+
+    &__q-text {
+        flex: 1;
+        height: 1rem;
+    }
+}
+
+@keyframes skeletonShimmer {
+    from { background-position: 100% 0; }
+    to { background-position: -100% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .skeleton {
+        animation: none;
+    }
+}

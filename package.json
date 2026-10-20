@@ -1,0 +1,11 @@
+{
+  "name": "genai-project",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "cd Backend && npm install && cd ../Frontend && npm install --include=dev && npm run build",
+    "start": "cd Backend && npm start"
+  }
+}

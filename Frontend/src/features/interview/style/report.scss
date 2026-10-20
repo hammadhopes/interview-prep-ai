@@ -1,0 +1,657 @@
+@use "../../../styles/variables.scss" as *;
+@use "sass:color";
+
+
+// ── Page Shell ────────────────────────────────────────────────────────────────
+.report-page {
+    width: calc(100% - min(250px, 80vw));
+    min-height: 100vh;
+    margin-left: min(250px, 80vw);
+
+    background-color: $bg-page;
+    color: $text-primary;
+    font-family: $font-stack;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: $sp-5 $sp-5 $sp-5 $sp-5;
+
+
+    @media (max-width: $sc-xl) {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 60px;
+    }
+}
+
+// ── Report Page ────────────────────────────────────────────────────────────────
+.report {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: $sp-5;
+
+    &__sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: $sp-4;
+        max-width: 244px;
+        animation: slideUp 0.3s ease-out;
+    }
+
+    &__stats {
+        padding: $sp-5 $sp-4 $sp-4 $sp-4;
+        display: flex;
+        flex-direction: column;
+        gap: $sp-4;
+        background-color: $bg-card;
+        border-radius: $r-md;
+        border: $bw-1 solid $border-color;
+    }
+
+    &__sidebarcontainer {
+        display: flex;
+        flex-direction: column;
+        gap: $sp-4;
+    }
+
+    @media(max-width: $sc-lg) {
+        flex-direction: column;
+
+        &__sidebar {
+            flex-direction: column-reverse;
+            max-width: none;
+            width: 100%;
+            gap: $sp-5;
+        }
+
+        &__stats {
+            padding: $sp-5 $sp-7;
+        }
+    }
+
+    @media (min-width: $sc-sm) and (max-width: $sc-lg) {
+        &__sidebar {
+            gap: $sp-1;
+            align-items: center;
+        }
+
+        &__stats {
+            background: none;
+            border: none;
+            align-items: center;
+        }
+
+        &__sidebarcontainer {
+            background-color: $bg-card;
+            border-radius: $r-md;
+            border: $bw-1 solid $border-color;
+            flex-direction: row;
+            padding: $sp-5 $sp-6;
+            align-items: center;
+            gap: $sp-5;
+        }
+    }
+}
+
+// ── Section Dividers ────────────────────────────────────────────────────────────────
+.section-divider {
+    height: $bw-1;
+    width: 100%;
+    background-color: $border-color;
+}
+
+.stats-divider {
+    height: $bw-1;
+    width: 100%;
+    background-color: $border-color;
+
+    @media (min-width: $sc-sm) and (max-width: $sc-lg) {
+        height: auto;
+        width: $bw-1;
+        align-self: stretch;
+
+        &--none {
+            display: none;
+        }
+    }
+}
+
+// ── Report Navbar ────────────────────────────────────────────────────────────────
+.report-nav {
+    padding: $sp-5 $sp-4 $sp-4 $sp-4;
+    display: flex;
+    flex-direction: column;
+    gap: $sp-2;
+    background-color: $bg-card;
+    border-radius: $r-md;
+    border: $bw-1 solid $border-color;
+
+    &__label {
+        font-weight: $fw-bold;
+        color: $text-muted;
+        text-transform: uppercase;
+        font-size: $fs-xs;
+        margin-left: $sp-3;
+        letter-spacing: 0.09rem;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: $sp-1;
+    }
+
+    &__item {
+        background: none;
+        border: none;
+        outline: none;
+        border-radius: $r-md;
+        color: $text-muted;
+        font-weight: $fw-regular;
+        font-size: $fs-sm;
+        padding: $sp-3 $sp-4;
+
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: $sp-2;
+
+        line-height: 1;
+        font-family: inherit;
+        transition: color 0.2s ease, background-color 0.2s ease;
+        cursor: pointer;
+
+
+        &:hover {
+            color: white;
+            background-color: $bg-input;
+            
+        }
+
+        &--active {
+            color: $accent;
+            background-color: rgba($accent, 0.1);
+
+            &:hover {
+                color: $accent;
+                background-color: rgba($accent, 0.1);
+            }   
+        }
+    }
+
+    &__icon {
+        display: block;
+        flex-shrink: 0;
+        height: $fs-md;
+        width: $fs-md;
+    }
+
+    @media (min-width: $sc-md) and (max-width: $sc-lg) {
+        width: max-content;
+        max-width: 100%;
+        min-width: 0;
+        padding: 0;
+        border-radius: $r-full;
+        overflow: hidden;
+
+        &__label {
+            display: none;
+        }
+
+        &__content {
+            flex-direction: row;
+            overflow-x: auto;     
+            overscroll-behavior-x: contain;
+            -webkit-overflow-scrolling: touch;  
+            scrollbar-width: none;  
+            gap: 0;
+
+            &::-webkit-scrollbar { 
+                display: none; 
+            }
+        }
+
+        &__item {
+            border-radius: 0;
+            min-width: auto;
+            flex: 1 0 auto;
+            justify-content: center;
+            white-space: nowrap;
+            padding: $sp-3 $sp-6;
+        }
+    }
+
+    @media (max-width: $sc-md) {
+        display: none;
+
+        &--popover {
+            display: flex;
+            position: absolute;
+            top: calc(100% + #{$sp-2});
+            left: 0;
+            z-index: 100;
+            width: max-content;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+    }
+}
+
+// Nav Popover
+.nav-popover {
+    position: relative;   // the popover positions itself against this
+    display: none;
+
+    @media (max-width: $sc-md) {
+        display: block;
+    }
+}
+
+// ── Statistics Sidebar ────────────────────────────────────────────────────────────────
+// ── Match Score ──
+.match-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $sp-3;
+
+    &__label {
+        font-weight: $fw-semibold;
+        color: $text-muted;
+        text-transform: uppercase;
+        font-size: $fs-xs;
+        
+        letter-spacing: 0.09rem;
+    }
+
+    &__ring {
+        height: 120px;
+        width: 120px;
+        border-radius: $r-full;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        &--high {
+            border: 3px solid $severity-low;
+        }
+
+        &--mid {
+            border: 3px solid $severity-mid;
+        }
+
+        &--low {
+            border: 3px solid $severity-high;
+        }
+    }
+
+    &__value {
+        font-size: $fs-2xl;
+        font-weight: $fw-bold;
+        line-height: 0.8;
+    }
+
+    &__pct {
+        color: $text-muted;
+        text-align: center;
+    }
+}
+
+// ── Skill Gaps ──
+.skill-gaps {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: $sp-3;
+
+    &__label {
+        font-weight: $fw-semibold;
+        color: $text-muted;
+        text-transform: uppercase;
+        font-size: $fs-xs;
+        
+        letter-spacing: 0.09rem;
+    }
+    
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: $sp-2;
+    }
+
+    &__tag {
+        font-size: $fs-sm;
+        font-weight: $fw-semibold;
+        border-radius: $r-sm;
+        padding: $sp-1 $sp-2;
+
+        &--high {
+            color: $severity-high;
+            background-color: rgba($severity-high, 0.1);
+            border: $bw-1 solid $severity-high;
+        }
+
+        &--medium {
+            color: $severity-mid;
+            background-color: rgba($severity-mid, 0.1);
+            border: $bw-1 solid $severity-mid;
+        }
+
+        &--low {
+            color: $severity-low;
+            background-color: rgba($severity-low, 0.1);
+            border: $bw-1 solid $severity-low;
+        }
+    }
+}
+
+// ── Download Resume Button ──
+.resume-download-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    padding-inline: $sp-4;
+
+    border: none;
+    outline: none;
+
+    color: $text-primary;
+    background: linear-gradient(
+        135deg,
+        $accent,
+        color.adjust($accent, $lightness: -20%)
+    );
+
+    cursor: pointer;
+    
+    padding-block: $sp-3;
+    border-radius: $r-md;
+    font-weight: $fw-semibold;
+    font-family: inherit;
+    font-size: $fs-sm;
+
+    @media(max-width: $sc-lg) {
+        align-self: center;
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+// ── Report Content ────────────────────────────────────────────────────────────────
+.report-content {
+    flex: 1;
+    background-color: $bg-card;
+    border: $bw-1 solid $border-color;
+    border-radius: $r-md;
+    padding: $sp-5 5%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $sp-4;
+    min-height: 500px;
+
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: $sp-3;
+        flex-wrap: wrap;
+
+        @media (max-width: $sc-sm) {
+            font-size: $fs-xs;
+        }
+    }
+
+    &__count {
+        background-color: $bg-input;
+        border-radius: $r-full;
+        border: $bw-1 solid $border-color;
+        padding: $sp-1 $sp-3;
+        color: $text-muted;
+        font-size: $fs-sm;
+        font-weight: $fw-medium;
+    }
+
+    &__icon {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        align-self: center;
+        padding: $sp-3 $sp-5;
+        border-radius: $r-lg;
+        border: $bw-1 solid $border-color;
+        background-color: $bg-card;
+        color: $text-primary;
+        font-size: $fs-sm;
+        font-weight: $fw-semibold;
+        cursor: pointer;
+
+        &:hover {
+            border-color: rgba($text-primary, 0.2);
+        }
+
+        @media(max-width: $sc-md) {
+            display: flex;
+        }
+    }
+
+    @media(min-width: $sc-lg) {
+        animation: slideUp 0.3s ease-out;
+    }
+}
+
+// ── Questions ────────────────────────────────────────────────────────────────
+.q-list {
+    display: flex;
+    flex-direction: column;
+    gap: $sp-2;
+    width: 100%;
+}
+
+.q-card {
+    display: flex;
+    flex-direction: column; 
+    align-items: stretch;
+    background-color: $bg-input;
+    border-radius: $r-md;
+    border: $bw-1 solid $border-color;
+    transition: border-color 0.2s ease;
+    width: 100%;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        padding: $sp-3 $sp-3;
+        gap: $sp-3;
+        cursor: pointer;
+        width: 100%;
+        font-size: $fs-sm;
+        font-weight: $fw-semibold;
+    }
+
+    &__index {
+        color: $accent;
+        background-color: rgba($accent, 0.1);
+        padding: $sp-1 $sp-2;
+        border-radius: $r-md;
+        border: $bw-1 solid rgba($accent, 0.3);
+        font-size: $fs-xs;
+        letter-spacing: 0.08rem;
+    }
+
+    &__question {
+        flex: 1;
+        color: $text-primary;
+    }
+
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: $sp-4;
+        padding: $sp-3 $sp-3;  
+        border-top: $bw-1 solid $border-color;
+    }
+
+    &__section {
+        display: flex;
+        flex-direction: column;
+        gap: $sp-2;
+
+        p {
+            color: $text-muted;
+            font-size: $fs-sm;
+        }
+    }
+
+    &__tag {
+        font-size: $fs-2xs;
+        font-weight: $fw-bold;
+        text-transform: uppercase;
+        letter-spacing: 0.05rem;
+        padding: $sp-1 $sp-2;
+        width: fit-content;
+        border-radius: $r-md;
+
+        &--intention {
+            color: #a78bfa;
+            background-color: rgba(#a78bfa, 0.1);
+            border: 1px solid rgba(#a78bfa, 0.2);
+        }
+
+        &--answer {
+            color: #3fb950;
+            background-color: rgba(#3fb950, 0.1);
+            border: 1px solid rgba(#3fb950, 0.2);
+        }
+    }
+
+    &__chevron {
+        color: $text-muted;
+        transition: transform 0.3s ease;
+
+        &--open {
+            color: $accent;
+            transform: rotate(-180deg) translateY(4px);
+        }
+    }
+
+
+    &:hover {
+        border-color: rgba($text-primary, 0.2);
+    }
+}
+
+// ── Road Map Days ────────────────────────────────────────────────────────────────
+.roadmap-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 28px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(to bottom, $accent, rgba($accent, 0.1));
+        border-radius: 1px;
+    }
+}
+
+.roadmap-day {
+    display: flex;
+    flex-direction: column;
+    gap: $sp-2;
+    padding: $sp-3 0 $sp-3 $sp-8;
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 21px;
+        top: 1.05rem;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background-color: $bg-card;
+        border: 2px solid $accent;
+    }
+
+    &__header {
+        display: flex;
+        gap: $sp-2;
+        align-items: center;
+    }
+
+    &__badge {
+        font-size: $fs-xs;
+        font-weight: $fw-semibold;
+        padding: $sp-1 $sp-2;
+
+        background-color: rgba($accent, 0.1);
+        border: $bw-1 solid $accent;
+        color: $accent;
+        border-radius: $r-lg;
+    }
+
+    &__focus {
+        font-size: fs-sm;
+        color: $text-primary;
+        font-weight: $fw-semibold;
+    }   
+
+    &__tasks {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: $sp-1;
+
+        li {
+            display: flex;
+            align-items: flex-start;
+            gap: $sp-2;
+            font-size: $fs-sm;
+            color: $text-muted;
+            line-height: 1.5;
+        }
+    }
+
+    &__bullet {
+        flex-shrink: 0;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: $text-muted;
+        margin-top: $sp-2;
+    }
+}
+
+// == ANIMATIONS =================================================================
+@keyframes slideUp {
+    from {
+        opacity: 0.4;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
